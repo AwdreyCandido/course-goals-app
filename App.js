@@ -18,21 +18,29 @@ export default function App() {
     { id: 10, text: "List item 10" },
   ]);
 
-  function AddGoalHandler(goalText) {
+  function addGoalHandler(goalText) {
     setGoalsList((currentGoals) => [
       ...currentGoals,
       { id: Math.log1p(Math.random()), text: goalText },
     ]);
   }
 
+  function deleteGoalHandler(id) {
+    setGoalsList((currentGoals) => [
+      ...currentGoals.filter((goal) => goal.id !== id),
+    ]);
+  }
+
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={AddGoalHandler} />
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={goalsList}
-          renderItem={(goals) => {
-            return <GoalItem goal={goals.item.text} />;
+          renderItem={(goal) => {
+            return (
+              <GoalItem goal={goal.item} onDeleteGoal={deleteGoalHandler} />
+            );
           }}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={true}
