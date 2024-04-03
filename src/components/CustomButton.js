@@ -1,8 +1,14 @@
 import { Pressable, Text, StyleSheet } from "react-native";
 
-function CustomButtom({ onPress, title }) {
+function CustomButtom({ onPress, title, type }) {
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable
+      style={{
+        ...styles.button,
+        backgroundColor: type != "del" ? "#5e0acc" : "red",
+      }}
+      onPress={onPress}
+    >
       <Text style={styles.title}>{title}</Text>
     </Pressable>
   );
@@ -14,7 +20,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 14,
     borderRadius: 6,
-    backgroundColor: "#5e0acc",
   },
   title: {
     fontSize: 16,

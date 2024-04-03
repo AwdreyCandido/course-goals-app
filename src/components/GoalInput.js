@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Modal,
   Pressable,
+  Keyboard,
+  Alert,
 } from "react-native";
 import CustomButtom from "./CustomButton";
 
@@ -17,7 +19,14 @@ function GoalInput({ onAddGoal, onToggleModal, visible }) {
   }
 
   function addGoalHandler() {
+    if (goalText == "" || goalText.length < 5) {
+      Alert.alert("Error", "The Goal must have a greater title!", [
+        { text: "OK", type: "error" },
+      ]);
+      return;
+    }
     onAddGoal(goalText);
+    onToggleModal();
     setGoalText("");
   }
 
@@ -38,10 +47,15 @@ function GoalInput({ onAddGoal, onToggleModal, visible }) {
             placeholder="Your course goal"
             value={goalText}
             onChangeText={goalInputHandler}
+            onSubmitEditing={Keyboard.dismiss}
           />
           <View style={styles.buttonContainer}>
             <CustomButtom onPress={addGoalHandler} title="Add Goal" />
-            <CustomButtom onPress={onToggleModal} title="Close Modal" />
+            <CustomButtom
+              onPress={onToggleModal}
+              title="Close Modal"
+              type="del"
+            />
           </View>
         </View>
       </View>
