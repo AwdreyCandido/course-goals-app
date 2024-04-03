@@ -1,16 +1,10 @@
 import { useState } from "react";
-import {
-  Button,
-  ScrollView,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
+
+import GoalItem from "./src/components/GoalItem";
+import GoalInput from "./src/components/GoalInput";
 
 export default function App() {
-  const [goalText, setGoalText] = useState("");
   const [goalsList, setGoalsList] = useState([
     { id: 1, text: "List item 1" },
     { id: 2, text: "List item 2" },
@@ -22,41 +16,23 @@ export default function App() {
     { id: 8, text: "List item 8" },
     { id: 9, text: "List item 9" },
     { id: 10, text: "List item 10" },
-    { id: 11, text: "List item 11" },
-    { id: 12, text: "List item 12" },
-    { id: 13, text: "List item 13" },
-    { id: 14, text: "List item 14" },
-    { id: 15, text: "List item 15" },
   ]);
 
-  function goalInputHandler(enteredText) {
-    setGoalText(enteredText);
-  }
-  function AddGoalHandler() {
-    setGoalsList((currentGoals) => [...currentGoals, goalText]);
+  function AddGoalHandler(goalText) {
+    setGoalsList((currentGoals) => [
+      ...currentGoals,
+      { id: Math.log1p(Math.random()), text: goalText },
+    ]);
   }
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goal"
-          onChangeText={goalInputHandler}
-        />
-        <Button onPress={AddGoalHandler} title="Add Goal" />
-      </View>
+      <GoalInput onAddGoal={AddGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={goalsList}
           renderItem={(goals) => {
-            return (
-              <View style={styles.goalItem}>
-                <Text style={{ color: "white", fontWeight: 500 }}>
-                  {goals.item.text}
-                </Text>
-              </View>
-            );
+            return <GoalItem goal={goals.item.text} />;
           }}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={true}
@@ -72,30 +48,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 20,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 30,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
-  },
   goalsContainer: {
     flex: 4,
-  },
-  goalItem: {
-    marginVertical: 8,
-    padding: 14,
-    borderRadius: 6,
-    backgroundColor: "#5e0acc",
-    color: "white",
   },
 });
