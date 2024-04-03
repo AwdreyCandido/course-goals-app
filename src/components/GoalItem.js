@@ -11,7 +11,7 @@ function GoalItem({ goal, onDeleteGoal }) {
       <Text style={styles.goalText}>{goal.text}</Text>
       <View style={styles.buttonContainer}>
         <Button title="edit" />
-        <Button onPress={deleteGoalHandler.bind(this, goal.id)} title="del" />
+        <Button color={'red'} onPress={deleteGoalHandler.bind(this, goal.id)} title="del" />
       </View>
     </View>
   );
