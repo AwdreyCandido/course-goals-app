@@ -1,9 +1,33 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
   const [goalText, setGoalText] = useState("");
-  const [goalsList, setGoalsList] = useState([]);
+  const [goalsList, setGoalsList] = useState([
+    { id: 1, text: "List item 1" },
+    { id: 2, text: "List item 2" },
+    { id: 3, text: "List item 3" },
+    { id: 4, text: "List item 4" },
+    { id: 5, text: "List item 5" },
+    { id: 6, text: "List item 6" },
+    { id: 7, text: "List item 7" },
+    { id: 8, text: "List item 8" },
+    { id: 9, text: "List item 9" },
+    { id: 10, text: "List item 10" },
+    { id: 11, text: "List item 11" },
+    { id: 12, text: "List item 12" },
+    { id: 13, text: "List item 13" },
+    { id: 14, text: "List item 14" },
+    { id: 15, text: "List item 15" },
+  ]);
 
   function goalInputHandler(enteredText) {
     setGoalText(enteredText);
@@ -23,13 +47,20 @@ export default function App() {
         <Button onPress={AddGoalHandler} title="Add Goal" />
       </View>
       <View style={styles.goalsContainer}>
-        {goalsList.map((goal) => {
-          return (
-            <View style={styles.goalItem} key={goal}>
-              <Text style={{ color: "white" }}>{goal}</Text>
-            </View>
-          );
-        })}
+        <FlatList
+          data={goalsList}
+          renderItem={(goals) => {
+            return (
+              <View style={styles.goalItem}>
+                <Text style={{ color: "white", fontWeight: 500 }}>
+                  {goals.item.text}
+                </Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={true}
+        />
       </View>
     </View>
   );
